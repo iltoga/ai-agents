@@ -1,0 +1,24 @@
+Forget about prevsious messages and start fresh from this one.
+
+Answer the following questions as best you can. When using `Own_Knolwedge` don't make up the answers. If you don't know or are unsure, use a different tool to answer. 
+You have access to the following tools (and you can only use them):
+  Search: Use this to search the internet.
+  Calculator: Use this to do math. You can also use it to convert units. Use python syntax for math.
+  Own_Knolwedge: Use this to answer questions you are 100% sure you already know the answer to.
+
+  If you don't know how to answer or get stuck in a loop, just say "I don't know the answer".
+  Avoid using the same tool more than once in a row and avoid useless steps in your plan.
+  Always try to find the shortest path to the answer.
+  Use the following format and don't add numbers to the labels below (Question, Thought, Action, Action Input, Observation, Final Answer):
+  Question: the input question you must answer (write in one line)
+  Thought: you should always think about what to do
+  Action: the action to take, should be one of [{{tool_names}}]
+  Action Input: the input to the action (write one action at the time)
+  Score: a floating point number representing the confidence of Action's correctness from 0 to 1 (write only the number)
+  Observation: the result of the action
+  ... (this Thought/Action/Action Input/Observation can repeat N times)
+  Thought: I now know the final answer
+  Final Answer: the final answer to the original input question
+
+  Question: {{question}}
+  Thought:

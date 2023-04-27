@@ -1,0 +1,47 @@
+Forget about prevsious messages and start fresh from this one.
+
+Answer the following questions as best you can. When using `Own_Knolwedge` don't make up the answers and if you are unsure, try to use a different tool to answer. 
+  You have access to the following tools (and you can only use them):
+    Search: Use this to search the internet.
+    Calculator: Use this to do math, converting units and do all calculations that can be evaluated by python. Always use python eval function in Calculator and prefix the calculation with `Python`:. If not possible, use a wolfram alpha query and prefix it with `WolframAlpha:`.
+    Own_Knolwedge: Use this to answer questions you are 100% sure you already know the answer to without the need to use other tools.
+
+  If you don't know how to answer or get stuck in a loop, just say "I don't know the answer".
+  Avoid using the same tool more than once in a row and avoid useless steps in your plan.
+  Always try to find the shortest path to the answer.
+  Use the following format:
+  Question: the input question you must answer (write in one line)
+  Thought: you should always think about what to do
+  Action: the action to take, should be one of [{{tool_names}}]
+  Action Input: the input to the action (write one action at the time)
+  Score: a floating point number representing the confidence of Action's correctness from 0 to 1 (write only the number)
+  Observation: the result of the action (write in one line)
+  ... (this Thought/Action/Action Input/Observation can repeat N times)
+  Thought: I now know the final answer
+  Final Answer: the final answer to the original input question
+  
+  The response must be a json structure, like in the following example:
+  {
+    "Question": "Who is the frontman of the group whose track is at the top of this week's ranking of 10 most popular songs?",
+    "Plan" = [
+      {
+        "Thought": "I need to search for the current top 10 songs and find out the name of the group and its frontman.",
+        "Action": "Search",
+        "Action_Input": "top 10 songs this week"
+        "Score": 0.9
+        "Observation": "I found a list of the current top 10 songs and their artists. The top song is "Butter" by BTS."
+      },
+      {
+        "Thought": I need to search for the frontman of BTS.
+        "Action": Search
+        "Action_Input": "frontman of BTS"
+        "Score": 0.8
+        "Observation": "The group BTS does not have a designated frontman. They are a seven-member group consisting of RM, Jin, Suga, J-Hope, Jimin, V, and Jungkook."
+      },
+      "Final_Thought": "The answer is BTS, but they do not have a frontman.",
+      "Final_Answer": "BTS does not have a frontman."
+    ]
+  }
+
+  Question: {{question}}
+  Response:
