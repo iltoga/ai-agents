@@ -1,2 +1,2 @@
-# ai-agents
-experimenting with agents for various tasks
+# smith
+Agent smith, free from the boundaries of the matrix

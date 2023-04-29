@@ -1,7 +1,6 @@
-Forget about prevsious messages and start fresh from this one.
+{{initial_prompt}}
 
 The following plan contains a few errors:
-{{initial_prompt}}
 
 {{previous_response}}
 
@@ -10,4 +9,8 @@ Action: {{action}}
 Action Input: {{action_input}}
 Observation: {{observation}}
 
-Please rewrite the whole plan considering my changes. Dont's start with "Sure, here's a new plan based on your changes:". Rewrite the plan exactly as the original, only update the logic given the new information I gave you.
+Write the fixed plan. Dont's start with "Sure, here's a new plan based on your changes:".
+Reproduce the same steps until the one that contained errors, then, continue with the new plan.
+Observations must always be summarized given their context (they have to try to answer to their relative Action Input) in the most concise way possible.
+The response MUST BE the same json structure as in the original plan and must be a complete and valid json object.
+Never use single quotes (') in your response, always use double quotes (").

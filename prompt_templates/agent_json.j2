@@ -1,47 +1,52 @@
-Forget about prevsious messages and start fresh from this one.
+Remember what I am going to write here in future messages from this chat.
+Answer the following questions as best you can.
+  You have access and can use only the following tools:
+{% for tool in tools %}
+    {{ tool.name }}: {{ tool.description }}
+{% endfor %}
 
-Answer the following questions as best you can. When using `Own_Knolwedge` don't make up the answers and if you are unsure, try to use a different tool to answer. 
-  You have access to the following tools (and you can only use them):
-    Search: Use this to search the internet.
-    Calculator: Use this to do math, converting units and do all calculations that can be evaluated by python. Always use python eval function in Calculator and prefix the calculation with `Python`:. If not possible, use a wolfram alpha query and prefix it with `WolframAlpha:`.
-    Own_Knolwedge: Use this to answer questions you are 100% sure you already know the answer to without the need to use other tools.
-
-  If you don't know how to answer or get stuck in a loop, just say "I don't know the answer".
-  Avoid using the same tool more than once in a row and avoid useless steps in your plan.
-  Always try to find the shortest path to the answer.
+  Always think of what is the best tool to use job before choosing one.
+  If you don't know how to answer with the tools the you can use or are stuck in a loop, just say "I don't have the tools to answer the question. I would probably need something like (.. think of a tool that you would need to complete the job)".
+  Use the shortest path possible to reach your goals.
+  Avoid duplicate and useless steps in your plan.
   Use the following format:
   Question: the input question you must answer (write in one line)
   Thought: you should always think about what to do
-  Action: the action to take, should be one of [{{tool_names}}]
-  Action Input: the input to the action (write one action at the time)
+  Action: the action to take, must be one of [{{tool_names}}]. If you can't use one of the tools that have been given to you before, just answer "I can't answer this question with the tools I have" and repeat it in the Final Answer.
+  Action Input: the input to the action
   Score: a floating point number representing the confidence of Action's correctness from 0 to 1 (write only the number)
-  Observation: the result of the action (write in one line)
-  ... (this Thought/Action/Action Input/Observation can repeat N times)
+  Step: the step number of the action (write only the number)
+  Observation: the result of the action (write it in a concise way, as short as possible, in one line)
+  ... (this Thought/Action/Action Input/Observation can repeat N times. Always try to find as few steps as possible to answer the question)
   Thought: I now know the final answer
   Final Answer: the final answer to the original input question
   
-  The response must be a json structure, like in the following example:
+  The response MUST BE the json structure in the example below and must be a complete and valid json object:
   {
     "Question": "Who is the frontman of the group whose track is at the top of this week's ranking of 10 most popular songs?",
     "Plan" = [
       {
         "Thought": "I need to search for the current top 10 songs and find out the name of the group and its frontman.",
         "Action": "Search",
-        "Action_Input": "top 10 songs this week"
+        "ActionInput": "top 10 songs this week"
         "Score": 0.9
-        "Observation": "I found a list of the current top 10 songs and their artists. The top song is "Butter" by BTS."
+        "Step": 1
+        "Observation": "I found a list of the current top 10 songs and their artists. The top song is \"Butter\" by BTS."
       },
       {
         "Thought": I need to search for the frontman of BTS.
         "Action": Search
-        "Action_Input": "frontman of BTS"
+        "ActionInput": "frontman of BTS"
         "Score": 0.8
+        "Step": 2
         "Observation": "The group BTS does not have a designated frontman. They are a seven-member group consisting of RM, Jin, Suga, J-Hope, Jimin, V, and Jungkook."
       },
-      "Final_Thought": "The answer is BTS, but they do not have a frontman.",
-      "Final_Answer": "BTS does not have a frontman."
     ]
+    "FinalThought": "The answer is BTS, but they do not have a frontman.",
+    "FinalAnswer": "BTS does not have a frontman."
   }
+
+  It is very important that you never use single (') of double (") quotes in Thought, ActionInput and Observation.
 
   Question: {{question}}
   Response:

@@ -1,7 +1,4 @@
-Forget about prevsious messages and start fresh from this one.
-
-The following plan contains a few errors:
-{{initial_prompt}}
+The following plan contains errors:
 
 {{previous_response}}
 
@@ -10,5 +7,8 @@ Action: {{action}}
 Action Input: {{action_input}}
 Observation: {{observation}}
 
-Please rewrite the whole plan considering my changes. Just output the json response. 
-Rewrite the plan exactly as the original, only update the logic starting from the step that contained errors.
+Rewrite and fix the plan. Just output the json response.
+Reproduce the same steps until the step that contained the errors. After that, continue with the new plan.
+Try not to increase the number of required steps to reach the goal.
+Observations should be summarized as short as possible given their context.
+It is very important that you never use single (') of double (") quotes in Thought, ActionInput and Observation.
