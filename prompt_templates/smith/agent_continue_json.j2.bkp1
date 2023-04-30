@@ -1,0 +1,14 @@
+{{initial_prompt}}
+
+The following plan contains a few errors:
+
+{{previous_response}}
+
+I have fixed this one for you:
+Action: {{action}}
+Action Input: {{action_input}}
+Observation: {{observation}}
+
+Write the fixed plan. Dont's start with "Sure, here's a new plan based on your changes:".
+Reproduce the same steps until the one that contained errors, then, continue with the new plan.
+Observations must always be summarized given their context (they have to try to answer to their relative Action Input) in the most concise way possible.

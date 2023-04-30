@@ -1,7 +1,7 @@
 from langchain.tools.ddg_search.tool import DuckDuckGoSearchTool
 from pyagents import CosineSimilarity
 
-class SearchTool:
+class WebSearchTool:
     def __init__(self):
         self.search_tool = DuckDuckGoSearchTool()
         
@@ -15,6 +15,6 @@ class SearchTool:
         return res
 
 if __name__ == "__main__":
-    search = SearchTool()
+    search = WebSearchTool()
     res = search.run("Who is the president of United States?")
     print(res)

@@ -70,23 +70,23 @@ def extract_actions_and_inputs(text):
     return actions_and_inputs
 
 def prompt_default(question, tools):
-    template = templateEnv.get_template('agent_json.j2')
+    template = templateEnv.get_template('smith_agent_json.j2')
     outputText = template.render(question=question, tools=tools, tool_names=swk.get_available_tool_names_str())
     return outputText
 
-def prompt_continue(initial_prompt, previous_response, action, action_input, observation):
-    template = templateEnv.get_template('agent_continue_json.j2')
-    outputText = template.render(
-        initial_prompt=initial_prompt,
-        previous_response=previous_response, 
-        action=action, 
-        action_input=action_input, 
-        observation=observation
-    )
-    return outputText
+# def prompt_continue(initial_prompt, previous_response, action, action_input, observation):
+#     template = templateEnv.get_template('smith/agent_continue_json.j2')
+#     outputText = template.render(
+#         initial_prompt=initial_prompt,
+#         previous_response=previous_response, 
+#         action=action, 
+#         action_input=action_input, 
+#         observation=observation
+#     )
+#     return outputText
 
 def prompt_continue(initial_prompt, previous_response, action, action_input, observation):
-    template = templateEnv.get_template('agent_continue_json.j2')
+    template = templateEnv.get_template('smith/agent_continue_json.j2')
     outputText = template.render(
         initial_prompt=initial_prompt,
         previous_response=previous_response, 
@@ -174,7 +174,31 @@ templateEnv = Environment(loader=templateLoader)
 
 session_token = os.environ.get('CHATGPT_SESSION_TOKEN')
 conversation_id = os.environ.get('CHATGPT_CONVERSATION_ID')
-swk = SwissKnife(session_token=session_token, conversation_id=conversation_id)
+
+smith_tools = [
+    {
+        "name": "Calculator",
+        "description": "Use this to do math, converting units and do calculations that can be evaluated by python. This tool returns an expression that can be calculated using python eval function. If the calculation is too complex for this tool, try to use WolframAlpha tool instead.",
+    },
+    {
+        "name": "WebSearch",
+        "description": "Use this to search the web. Use it to search for information that can be found on the web. This tool returns a list of URLs. If you want to search for code, use CodeSearch tool instead.",
+    },
+    {
+        "name": "OwnKnowledge",
+        "description": "Use this to answer questions you are 100% sure you already know the answer to. Replace None with null, if you have to write it in the Action Input when using this tool.",
+    },
+    {
+        "name": "WolframAlpha",
+        "description": "Use this to answer questions using WolframAlpha. The context for WolframAlpha is: mathematics, science, engineering, geography, history, linguistics, finance. Examples include solving equations, performing integrations and differentiations, computing statistical properties, identifying chemical compounds, analyzing genomes, providing weather forecasts, converting units, and comparing nutritional information of foods. Additionally, Wolfram Alpha can answer factual questions by providing curated and up-to-date information from its vast knowledge base, including definitions, biographical information, population data, and more. In case of math, use it only if the computation cannot be done using Calculator.",
+    }
+]  
+
+swk = SwissKnife(
+    session_token=session_token, 
+    conversation_id=conversation_id,
+    available_tools=smith_tools,
+)
 tools = swk.get_available_tools()
 tool_names = swk.get_available_tool_names()
 

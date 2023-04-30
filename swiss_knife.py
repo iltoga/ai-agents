@@ -1,8 +1,9 @@
 import re
 import time
-from loaders.search_tool import SearchTool
+from loaders.web_search import WebSearchTool
 from loaders.simple_calculator import SimpleCalculator
 from loaders.wolfram_alpha import WolfRamAlpha
+from loaders.code_search import CodeSearchTool
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -18,8 +19,12 @@ class SwissKnife:
             "description": "Use this to do math, converting units and do calculations that can be evaluated by python. This tool returns an expression that can be calculated using python eval function. If the calculation is too complex for this tool, try to use WolframAlpha tool instead.",
         },
         {
-            "name": "Search",
-            "description": "Use this to search the web. It uses DuckDuckGo search engine.",
+            "name": "WebSearch",
+            "description": "Use this to search the web. Use it to search for information that can be found on the web. This tool returns a list of URLs. If you want to search for code, use CodeSearch tool instead.",
+        },
+        {
+            "name": "CodeSearch",
+            "description": "Use this to search public code from GitHub, when you need ideas on how to write code.",
         },
         {
             "name": "OwnKnowledge",
@@ -32,6 +37,10 @@ class SwissKnife:
         {
             "name": "WolframAlpha",
             "description": "Use this to answer questions using WolframAlpha. The context for WolframAlpha is: mathematics, science, engineering, geography, history, linguistics, finance. Examples include solving equations, performing integrations and differentiations, computing statistical properties, identifying chemical compounds, analyzing genomes, providing weather forecasts, converting units, and comparing nutritional information of foods. Additionally, Wolfram Alpha can answer factual questions by providing curated and up-to-date information from its vast knowledge base, including definitions, biographical information, population data, and more. In case of math, use it only if the computation cannot be done using Calculator.",
+        },
+        {
+            "name": "BashShell",
+            "description": "Use this to install dependencies, execute commands and run code and tests. Test commands must be in the form of (example for python code): \"python -c 'from foo import hello; print test_hello()'\".",
         }
     ]  
     
@@ -92,10 +101,20 @@ class SwissKnife:
         except:
             res = f"I cannot calculate espression: {expression}. try to rewrite it in a different way, understandable by wolfram alpha"
         return res
+    
+    def code_search(self, query):
+        # use the search tool
+        search = CodeSearchTool()
+        res = search.run(query)
+        # if res is long, summarize it
+        if len(res) > 400:
+            summarize_prompt = self.prompt_summarize_qa(query, res)
+            res = self.generate(summarize_prompt)
+        return res
 
     def web_search(self, query):
         # use the search tool
-        search = SearchTool()
+        search = WebSearchTool()
         res = search.run(query)
         # if res is long, summarize it
         if len(res) > 100:
